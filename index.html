@@ -1,1163 +1,668 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EGK High Speed Rail</title>
+<title>EGK Business Suite — Powering Malaysian Business with AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap');
-
-:root {
-–sky-top: #0a0e1a;
-–sky-mid: #1a2a4a;
-–sky-low: #2a4a7a;
-–horizon: #4a7aaa;
-–ground: #1a1a2a;
-–rail-silver: #8899aa;
-–egk-blue: #0055cc;
-–egk-orange: #ff6600;
-–egk-white: #f0f4ff;
-–glass-tint: rgba(180,220,255,0.15);
-–speed-glow: rgba(0,120,255,0.6);
+:root{
+  --ink:     #020914;
+  --deep:    #040E20;
+  --navy:    #060F28;
+  --blue:    #0A2E7C;
+  --royal:   #1248C8;
+  --cyan:    #00C8FF;
+  --teal:    #00E8B0;
+  --gold:    #FFB800;
+  --amber:   #FF8C00;
+  --green:   #00DD88;
+  --purple:  #7040FF;
+  --white:   #FFFFFF;
+  --silver:  #7A9AB8;
+  --dim:     #2A4060;
+  --card:    rgba(255,255,255,0.04);
+  --border:  rgba(0,200,255,0.13);
+  --r:       16px;
 }
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--ink);color:var(--silver);overflow-x:hidden;}
 
-- { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-background: var(–sky-top);
-overflow: hidden;
-font-family: ‘Rajdhani’, sans-serif;
-height: 100vh;
-width: 100vw;
-position: relative;
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:rgba(2,9,20,.97);backdrop-filter:blur(18px);
+  padding:11px 32px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
 }
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-brand img.logo{height:32px;border-radius:6px;}
+.nav-brand-text{font-family:'Orbitron',monospace;color:var(--cyan);font-size:.82rem;font-weight:700;letter-spacing:1px;}
+.nav-links{display:flex;gap:4px;list-style:none;align-items:center;flex-wrap:wrap;}
+.nav-links a{color:var(--silver);text-decoration:none;font-size:.78rem;font-weight:600;padding:5px 11px;border-radius:7px;transition:all .2s;}
+.nav-links a:hover{background:rgba(0,200,255,.1);color:var(--cyan);}
+.nav-cta{background:linear-gradient(135deg,var(--royal),var(--blue)) !important;color:white !important;font-weight:700 !important;}
 
-/* ── SKY GRADIENT ── */
-.sky {
-position: absolute;
-inset: 0;
-background: linear-gradient(
-180deg,
-#040810 0%,
-#0a1828 25%,
-#102040 50%,
-#1a3860 65%,
-#2a5080 75%,
-#3a6898 82%,
-#5888b8 90%,
-#7aaar0 95%
-);
-background: linear-gradient(
-180deg,
-#040810 0%,
-#0a1828 20%,
-#112244 45%,
-#1e4070 62%,
-#2e5888 72%,
-#4878a8 82%,
-#6898c8 90%,
-#88b8d8 96%,
-#aad0e8 100%
-);
+/* HERO */
+#hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;
+  padding:110px 36px 80px;
 }
-
-/* ── STARS ── */
-.stars {
-position: absolute;
-top: 0; left: 0;
-width: 100%; height: 60%;
-overflow: hidden;
+#biz-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+.hero-inner{
+  max-width:1200px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;position:relative;z-index:2;
 }
+@keyframes fadeup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes musf{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 
-.star {
-position: absolute;
-background: white;
-border-radius: 50%;
-animation: twinkle 3s infinite alternate;
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(0,200,255,.3);background:rgba(0,200,255,.07);
+  color:var(--cyan);font-size:.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 16px;border-radius:50px;margin-bottom:18px;
 }
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:blink 1.4s infinite;}
 
-@keyframes twinkle {
-0% { opacity: 0.2; transform: scale(1); }
-100% { opacity: 1; transform: scale(1.3); }
+.hero-title{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(2rem,4.5vw,3.8rem);
+  color:var(--white);line-height:1.08;margin-bottom:12px;
+  animation:fadeup .7s ease both;
 }
+.hero-title .cyan{color:var(--cyan);}
+.hero-title .gold{color:var(--gold);}
 
-/* ── MOUNTAINS ── */
-.mountains-far {
-position: absolute;
-bottom: 30%;
-width: 100%;
-height: 22%;
-overflow: hidden;
+.hero-sub{font-size:1rem;color:var(--silver);margin-bottom:22px;line-height:1.8;animation:fadeup .7s .1s ease both;}
+.hero-btns{display:flex;flex-wrap:wrap;gap:10px;animation:fadeup .7s .2s ease both;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:50px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:700;text-decoration:none;cursor:pointer;border:none;transition:all .22s;}
+.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--teal));color:#020914;box-shadow:0 6px 22px rgba(0,200,255,.35);}
+.btn-cyan:hover{transform:translateY(-2px);}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--amber));color:#1a0800;}
+.btn-gold:hover{transform:translateY(-2px);}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--white);border:1.5px solid rgba(255,255,255,.18);}
+.btn-ghost:hover{background:rgba(255,255,255,.12);}
+
+.hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px;animation:fadeup .7s .3s ease both;}
+.htag{background:rgba(255,255,255,.04);border:1px solid rgba(0,200,255,.14);color:var(--dim);font-size:.68rem;font-weight:600;padding:3px 10px;border-radius:50px;}
+
+/* hero right */
+.hero-right{text-align:center;position:relative;}
+.hero-mushi{width:clamp(130px,16vw,175px);filter:drop-shadow(0 12px 32px rgba(0,200,255,.35));animation:musf 4s ease-in-out infinite;display:block;margin:0 auto 16px;}
+.hero-stats-box{background:rgba(0,200,255,.06);border:1px solid var(--border);border-radius:16px;padding:16px 18px;text-align:left;}
+.hsb-title{font-family:'Orbitron',monospace;font-size:.68rem;font-weight:700;color:var(--cyan);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;}
+.hsb-row{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--silver);margin-bottom:6px;}
+.hsb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+/* STATS STRIP */
+.sstrip{background:rgba(0,200,255,.05);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 24px;position:relative;z-index:2;}
+.sstrip-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;}
+.ss{text-align:center;flex:1;min-width:120px;padding:5px 16px;border-right:1px solid var(--border);}
+.ss:last-child{border-right:none;}
+.ss-n{font-family:'Orbitron',monospace;font-size:1.3rem;font-weight:900;color:var(--cyan);display:block;}
+.ss-l{font-size:.62rem;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.8px;}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:76px 24px;}
+.container{max-width:1140px;margin:0 auto;}
+.sec-label{display:inline-flex;align-items:center;gap:7px;font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;}
+.sec-label::before{content:'';width:14px;height:1.5px;background:var(--cyan);display:inline-block;}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:800;color:var(--white);line-height:1.18;margin-bottom:12px;}
+.sec-title span{color:var(--cyan);}
+.sec-title .gold{color:var(--gold);}
+.sec-desc{font-size:.93rem;color:var(--silver);line-height:1.8;max-width:640px;}
+.text-center{text-align:center;margin:0 auto;}
+
+/* ── CATEGORY FILTER ── */
+#apps{background:linear-gradient(180deg,var(--ink),var(--deep));}
+.cat-filter{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:28px 0;}
+.cf{padding:7px 18px;border-radius:50px;background:rgba(255,255,255,.06);color:var(--silver);font-weight:700;font-size:.8rem;cursor:pointer;border:1.5px solid rgba(255,255,255,.1);transition:all .2s;}
+.cf.active,.cf:hover{background:var(--cyan);color:#020914;border-color:var(--cyan);}
+
+/* ── APP GRID ── */
+.apps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;}
+.app-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px 18px;transition:all .32s;position:relative;overflow:hidden;
 }
+.app-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .32s;
+  background:radial-gradient(ellipse at top left,rgba(0,200,255,.1) 0%,transparent 70%);}
+.app-card:hover{transform:translateY(-7px);border-color:rgba(0,200,255,.45);box-shadow:0 18px 50px rgba(0,0,0,.5);}
+.app-card:hover::before{opacity:1;}
 
-.mountains-far svg {
-position: absolute;
-bottom: 0;
-width: 100%;
-height: 100%;
+.app-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
+.app-icon{width:56px;height:56px;border-radius:14px;object-fit:cover;box-shadow:0 6px 18px rgba(0,0,0,.5);flex-shrink:0;transition:transform .3s;}
+.app-card:hover .app-icon{transform:scale(1.08) rotate(-3deg);}
+.app-cat{font-size:.62rem;font-weight:800;padding:2px 9px;border-radius:50px;display:inline-block;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px;}
+.cat-ai{background:rgba(112,64,255,.18);color:#B090FF;border:1px solid rgba(112,64,255,.3);}
+.cat-finance{background:rgba(255,184,0,.15);color:var(--gold);border:1px solid rgba(255,184,0,.3);}
+.cat-ops{background:rgba(0,200,255,.12);color:var(--cyan);border:1px solid rgba(0,200,255,.3);}
+.cat-logistics{background:rgba(0,221,136,.12);color:var(--green);border:1px solid rgba(0,221,136,.3);}
+.cat-analytics{background:rgba(255,140,0,.15);color:var(--amber);border:1px solid rgba(255,140,0,.3);}
+.cat-productivity{background:rgba(0,232,176,.12);color:var(--teal);border:1px solid rgba(0,232,176,.3);}
+.app-name{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:var(--white);line-height:1.2;}
+.app-platform{font-size:.65rem;color:var(--dim);font-weight:600;}
+.app-desc{font-size:.78rem;color:var(--silver);line-height:1.6;margin-bottom:12px;}
+.app-dl{margin-top:auto;}
+.app-dl a{display:inline-block;transition:opacity .2s;}
+.app-dl a:hover{opacity:.8;}
+.app-dl img{height:34px;}
+.app-glow{position:absolute;top:-20px;right:-20px;width:90px;height:90px;border-radius:50%;filter:blur(40px);pointer-events:none;opacity:.2;}
+
+/* MUSHI SECTION */
+#mushi-cta{background:linear-gradient(135deg,var(--deep),#0A1840);text-align:center;padding:60px 24px;overflow:hidden;position:relative;}
+.mc-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;opacity:.12;}
+.mb1{width:400px;height:400px;background:var(--royal);top:-100px;left:-80px;}
+.mb2{width:350px;height:350px;background:var(--purple);bottom:-60px;right:-60px;}
+.mc-inner{max-width:680px;margin:0 auto;position:relative;z-index:2;}
+.mc-mushi{width:clamp(100px,14vw,150px);animation:musf 4s ease-in-out infinite;filter:drop-shadow(0 12px 28px rgba(0,200,255,.3));margin:0 auto 16px;display:block;}
+.mc-quote{font-family:'Syne',sans-serif;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--white);line-height:1.65;margin-bottom:12px;}
+.mc-quote .cyan{color:var(--cyan);}.mc-quote .gold{color:var(--gold);}
+
+/* FEATURE PILLARS */
+#pillars{background:var(--deep);}
+.pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px;}
+.pillar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 16px;text-align:center;transition:all .28s;}
+.pillar:hover{transform:translateY(-5px);border-color:rgba(0,200,255,.35);}
+.p-icon{font-size:2.2rem;margin-bottom:10px;}
+.p-title{font-weight:800;font-size:.88rem;color:var(--white);margin-bottom:6px;}
+.p-body{font-size:.76rem;color:var(--silver);line-height:1.6;}
+
+/* FOUNDER */
+#founder{background:var(--ink);}
+.founder-grid{display:grid;grid-template-columns:260px 1fr;gap:52px;align-items:start;margin-top:40px;}
+.founder-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px 20px;text-align:center;position:relative;overflow:hidden;}
+.founder-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--gold));}
+.fc-mushi{width:72px;margin:0 auto 10px;display:block;animation:musf 4.5s ease-in-out infinite;filter:drop-shadow(0 6px 14px rgba(0,200,255,.2));}
+.fc-name{font-family:'Orbitron',monospace;font-size:.88rem;font-weight:800;color:var(--white);margin-bottom:3px;}
+.fc-role{font-size:.72rem;color:var(--cyan);}
+.fc-logo{height:30px;margin:10px auto 0;display:block;border-radius:5px;}
+.fc-contacts{display:flex;flex-direction:column;gap:5px;margin-top:12px;}
+.fci{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--silver);}
+.founder-text blockquote{border-left:3px solid var(--gold);padding:14px 18px;background:rgba(255,184,0,.05);border-radius:0 10px 10px 0;font-style:italic;font-size:.92rem;color:#CBD5E1;line-height:1.8;margin-bottom:14px;}
+.founder-text p{font-size:.84rem;color:var(--silver);line-height:1.8;margin-bottom:10px;}
+.fp{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.fpp{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--silver);font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:50px;}
+
+/* FOOTER */
+footer{background:#010408;border-top:1px solid var(--border);padding:44px 24px 20px;}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:36px;padding-bottom:26px;border-bottom:1px solid var(--border);}
+.fl-logo img{height:34px;margin-bottom:10px;}
+.fl-about{font-size:.75rem;line-height:1.75;color:#1A3040;}
+.fl-title{font-size:.68rem;font-weight:800;color:var(--silver);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.fl-links{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.fl-links a{color:#1A3040;text-decoration:none;font-size:.73rem;transition:color .2s;}
+.fl-links a:hover{color:var(--cyan);}
+.fb{max-width:1100px;margin:12px auto 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:.68rem;color:#0E1F2A;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:all .65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-inner,.founder-grid,.footer-inner{grid-template-columns:1fr;}
+  .pillars-grid{grid-template-columns:1fr 1fr;}
+  .hero-right{margin-top:20px;}
+  nav{padding:10px 16px;}
+  .nav-links{display:none;}
 }
-
-.mountains-mid {
-position: absolute;
-bottom: 28%;
-width: 200%;
-height: 18%;
-animation: slideMtnMid 30s linear infinite;
-}
-
-.mountains-mid svg {
-position: absolute;
-bottom: 0;
-width: 50%;
-height: 100%;
-}
-.mountains-mid svg:nth-child(2) { left: 50%; }
-
-@keyframes slideMtnMid {
-0% { transform: translateX(0); }
-100% { transform: translateX(-50%); }
-}
-
-/* ── GROUND ── */
-.ground {
-position: absolute;
-bottom: 0;
-width: 100%;
-height: 30%;
-background: linear-gradient(
-180deg,
-#1e2838 0%,
-#151d28 30%,
-#0e1520 100%
-);
-border-top: 2px solid rgba(100,140,180,0.3);
-}
-
-/* ── HORIZON GLOW ── */
-.horizon-glow {
-position: absolute;
-bottom: 29%;
-width: 100%;
-height: 8%;
-background: linear-gradient(
-180deg,
-transparent 0%,
-rgba(80,140,200,0.15) 40%,
-rgba(100,160,220,0.35) 70%,
-rgba(120,180,240,0.5) 100%
-);
-}
-
-/* ── RAIL TRACKS ── */
-.tracks {
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 30%;
-perspective: 600px;
-perspective-origin: 50% 0%;
-}
-
-.track-svg {
-position: absolute;
-bottom: 0;
-width: 100%;
-height: 100%;
-}
-
-/* ── SPEED LINES (background) ── */
-.speed-lines {
-position: absolute;
-top: 0; left: 0;
-width: 100%; height: 100%;
-overflow: hidden;
-pointer-events: none;
-}
-
-.speed-line {
-position: absolute;
-height: 1px;
-background: linear-gradient(90deg, transparent, rgba(100,160,255,0.4), transparent);
-animation: speedLine 0.6s linear infinite;
-transform-origin: right center;
-}
-
-@keyframes speedLine {
-0% { transform: scaleX(0); opacity: 0; right: 0; }
-20% { opacity: 1; }
-80% { opacity: 0.6; }
-100% { transform: scaleX(1); opacity: 0; right: 100%; }
-}
-
-/* ── TRAIN WRAPPER ── */
-.train-scene {
-position: absolute;
-bottom: 22%;
-left: 0;
-width: 100%;
-height: 38%;
-overflow: visible;
-}
-
-/* ── TRAIN CONTAINER ── */
-.train {
-position: absolute;
-bottom: 0;
-left: 50%;
-transform: translateX(-50%);
-display: flex;
-align-items: flex-end;
-filter: drop-shadow(0 0 30px rgba(0,80,200,0.8)) drop-shadow(0 0 60px rgba(0,60,160,0.4));
-animation: trainFloat 4s ease-in-out infinite;
-}
-
-@keyframes trainFloat {
-0%, 100% { transform: translateX(-50%) translateY(0px); }
-50% { transform: translateX(-50%) translateY(-3px); }
-}
-
-/* ── LOCOMOTIVE (EUROSTAR STYLE) ── */
-.loco {
-position: relative;
-width: 260px;
-height: 110px;
-flex-shrink: 0;
-}
-
-.loco svg {
-width: 100%;
-height: 100%;
-overflow: visible;
-}
-
-/* ── CARGO CARS ── */
-.car {
-position: relative;
-height: 90px;
-flex-shrink: 0;
-margin-left: -2px;
-}
-
-.car svg {
-height: 100%;
-overflow: visible;
-}
-
-/* ── PASSENGER CARS ── */
-.pax {
-position: relative;
-height: 88px;
-flex-shrink: 0;
-margin-left: -2px;
-}
-
-.pax svg {
-height: 100%;
-overflow: visible;
-}
-
-/* ── TAIL ── */
-.tail {
-position: relative;
-width: 140px;
-height: 100px;
-flex-shrink: 0;
-margin-left: -2px;
-}
-
-.tail svg {
-width: 100%;
-height: 100%;
-overflow: visible;
-}
-
-/* ── WHEEL ANIMATION ── */
-.wheel-spin {
-animation: spin 0.3s linear infinite;
-transform-origin: center;
-}
-
-@keyframes spin {
-100% { transform: rotate(360deg); }
-}
-
-/* ── PANTOGRAPH SPARK ── */
-.spark {
-position: absolute;
-top: 8px;
-right: 80px;
-width: 20px;
-height: 20px;
-animation: spark 0.15s linear infinite alternate;
-}
-
-@keyframes spark {
-0% { opacity: 1; transform: scale(1) rotate(0deg); }
-100% { opacity: 0.4; transform: scale(1.5) rotate(45deg); }
-}
-
-/* ── MOTION BLUR STREAKS on train ── */
-.motion-blur {
-position: absolute;
-right: 100%;
-bottom: 15px;
-height: 60px;
-width: 300px;
-background: linear-gradient(90deg, transparent 0%, rgba(0,80,200,0.12) 50%, rgba(0,80,200,0.3) 100%);
-clip-path: polygon(0 20%, 100% 0%, 100% 100%, 0 80%);
-animation: blurPulse 0.5s ease-in-out infinite alternate;
-}
-
-@keyframes blurPulse {
-0% { opacity: 0.6; width: 280px; }
-100% { opacity: 1; width: 340px; }
-}
-
-/* ── GROUND SPEED DUST ── */
-.ground-dust {
-position: absolute;
-bottom: -5px;
-right: 90%;
-width: 400px;
-height: 20px;
-background: linear-gradient(90deg, transparent, rgba(80,120,180,0.2), rgba(100,150,200,0.4));
-border-radius: 50%;
-filter: blur(6px);
-animation: dustPulse 0.4s ease-in-out infinite alternate;
-}
-
-@keyframes dustPulse {
-0% { width: 350px; opacity: 0.5; }
-100% { width: 450px; opacity: 0.9; }
-}
-
-/* ── CATENARY WIRE ── */
-.catenary {
-position: absolute;
-top: 5%;
-left: 0;
-width: 200%;
-height: 8%;
-animation: slideWire 2s linear infinite;
-}
-
-@keyframes slideWire {
-0% { transform: translateX(0); }
-100% { transform: translateX(-50%); }
-}
-
-/* ── SCENERY POLES ── */
-.poles {
-position: absolute;
-bottom: 0;
-left: 0;
-width: 200%;
-height: 100%;
-animation: slidePoles 4s linear infinite;
-pointer-events: none;
-}
-
-@keyframes slidePoles {
-0% { transform: translateX(0); }
-100% { transform: translateX(-50%); }
-}
-
-/* ── HUD OVERLAY ── */
-.hud {
-position: absolute;
-top: 20px;
-left: 0;
-width: 100%;
-display: flex;
-justify-content: space-between;
-padding: 0 30px;
-pointer-events: none;
-z-index: 10;
-}
-
-.hud-panel {
-background: rgba(0,10,30,0.75);
-border: 1px solid rgba(0,100,200,0.4);
-border-radius: 6px;
-padding: 12px 18px;
-backdrop-filter: blur(8px);
-box-shadow: 0 0 20px rgba(0,80,200,0.2), inset 0 0 10px rgba(0,60,160,0.1);
-}
-
-.hud-label {
-font-family: ‘Rajdhani’, sans-serif;
-font-size: 10px;
-letter-spacing: 3px;
-color: rgba(100,160,220,0.7);
-text-transform: uppercase;
-margin-bottom: 3px;
-}
-
-.hud-value {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 32px;
-color: #88ccff;
-letter-spacing: 2px;
-line-height: 1;
-text-shadow: 0 0 10px rgba(0,140,255,0.8);
-}
-
-.hud-unit {
-font-size: 13px;
-color: rgba(100,160,220,0.8);
-letter-spacing: 1px;
-}
-
-.speed-ticker {
-animation: speedTick 2s steps(1) infinite;
-}
-
-@keyframes speedTick {
-0% { content: “”; }
-0% { opacity: 1; }
-50% { opacity: 0.85; }
-}
-
-.hud-center {
-text-align: center;
-}
-
-.route-text {
-font-family: ‘Rajdhani’, sans-serif;
-font-size: 11px;
-letter-spacing: 4px;
-color: rgba(150,200,255,0.9);
-text-transform: uppercase;
-}
-
-.route-line {
-display: flex;
-align-items: center;
-gap: 10px;
-margin-top: 5px;
-justify-content: center;
-}
-
-.route-dot {
-width: 6px; height: 6px;
-border-radius: 50%;
-background: #88ccff;
-box-shadow: 0 0 8px #88ccff;
-animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-0%, 100% { transform: scale(1); opacity: 1; }
-50% { transform: scale(1.4); opacity: 0.6; }
-}
-
-.route-dash {
-flex: 1;
-height: 1px;
-background: linear-gradient(90deg, rgba(100,160,220,0.3), rgba(100,160,220,0.8), rgba(100,160,220,0.3));
-max-width: 80px;
-}
-
-/* ── BOTTOM STATUS BAR ── */
-.status-bar {
-position: absolute;
-bottom: 15px;
-left: 50%;
-transform: translateX(-50%);
-background: rgba(0,10,30,0.8);
-border: 1px solid rgba(0,100,200,0.35);
-border-radius: 30px;
-padding: 8px 24px;
-display: flex;
-gap: 30px;
-align-items: center;
-backdrop-filter: blur(8px);
-z-index: 10;
-}
-
-.status-item {
-display: flex;
-align-items: center;
-gap: 8px;
-}
-
-.status-dot {
-width: 7px; height: 7px;
-border-radius: 50%;
-animation: pulse 1s ease-in-out infinite;
-}
-
-.status-dot.green { background: #00ff88; box-shadow: 0 0 8px #00ff88; }
-.status-dot.blue  { background: #0099ff; box-shadow: 0 0 8px #0099ff; }
-.status-dot.orange{ background: #ff8800; box-shadow: 0 0 8px #ff8800; }
-
-.status-text {
-font-family: ‘Rajdhani’, sans-serif;
-font-size: 11px;
-letter-spacing: 2px;
-color: rgba(160,200,240,0.85);
-text-transform: uppercase;
-}
-
-/* ── SCANLINE EFFECT ── */
-.scanlines {
-position: fixed;
-inset: 0;
-background: repeating-linear-gradient(
-0deg,
-transparent,
-transparent 2px,
-rgba(0,0,0,0.03) 2px,
-rgba(0,0,0,0.03) 4px
-);
-pointer-events: none;
-z-index: 20;
-}
-
-/* ── VIGNETTE ── */
-.vignette {
-position: fixed;
-inset: 0;
-background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,10,0.7) 100%);
-pointer-events: none;
-z-index: 15;
-}
-
-/* ── EGK LOGO on train ── */
-.egk-logo-img {
-image-rendering: crisp-edges;
+@media(max-width:540px){
+  .pillars-grid,.apps-grid{grid-template-columns:1fr;}
 }
 </style>
-
 </head>
 <body>
 
-<div class="sky"></div>
-
-<!-- Stars -->
-
-<div class="stars" id="stars"></div>
-
-<!-- Far mountains -->
-
-<div class="mountains-far">
-  <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
-    <defs>
-      <linearGradient id="mtnFar" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#2a4060"/>
-        <stop offset="100%" stop-color="#1a2838"/>
-      </linearGradient>
-    </defs>
-    <polygon points="0,200 80,80 160,130 260,40 360,100 480,30 560,90 660,20 760,80 860,15 960,70 1060,25 1160,75 1260,35 1360,85 1440,50 1440,200" fill="url(#mtnFar)" opacity="0.7"/>
-    <!-- Snow caps -->
-    <polygon points="260,40 280,60 300,40 285,55 270,55" fill="rgba(200,220,240,0.6)"/>
-    <polygon points="480,30 500,55 520,30 505,50 495,50" fill="rgba(200,220,240,0.6)"/>
-    <polygon points="660,20 680,50 700,20 685,45 675,45" fill="rgba(200,220,240,0.6)"/>
-    <polygon points="860,15 882,48 900,15 885,42 875,42" fill="rgba(200,220,240,0.6)"/>
-  </svg>
-</div>
-
-<!-- Mid mountains (scrolling) -->
-
-<div class="mountains-mid">
-  <svg viewBox="0 0 720 160" preserveAspectRatio="none" style="left:0;position:absolute;width:50%;height:100%;bottom:0">
-    <defs>
-      <linearGradient id="mtnMid" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1a3050"/>
-        <stop offset="100%" stop-color="#0f1e30"/>
-      </linearGradient>
-    </defs>
-    <polygon points="0,160 60,70 130,110 210,30 300,90 400,20 480,75 560,40 640,80 720,30 720,160" fill="url(#mtnMid)"/>
-    <polygon points="210,30 228,55 246,30 232,50 222,50" fill="rgba(180,210,240,0.5)"/>
-    <polygon points="400,20 420,50 438,20 424,46 412,46" fill="rgba(180,210,240,0.5)"/>
-    <polygon points="720,30 738,55 750,30 740,50 726,50" fill="rgba(180,210,240,0.5)"/>
-  </svg>
-  <svg viewBox="0 0 720 160" preserveAspectRatio="none" style="left:50%;position:absolute;width:50%;height:100%;bottom:0">
-    <polygon points="0,160 60,70 130,110 210,30 300,90 400,20 480,75 560,40 640,80 720,30 720,160" fill="url(#mtnMid)"/>
-    <polygon points="210,30 228,55 246,30 232,50 222,50" fill="rgba(180,210,240,0.5)"/>
-    <polygon points="400,20 420,50 438,20 424,46 412,46" fill="rgba(180,210,240,0.5)"/>
-    <polygon points="720,30 738,55 750,30 740,50 726,50" fill="rgba(180,210,240,0.5)"/>
-  </svg>
-</div>
-
-<!-- Horizon glow -->
-
-<div class="horizon-glow"></div>
-
-<!-- Ground -->
-
-<div class="ground"></div>
-
-<!-- Rail Tracks -->
-
-<div class="tracks">
-  <svg class="track-svg" viewBox="0 0 1440 300" preserveAspectRatio="none">
-    <defs>
-      <linearGradient id="railGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#6688aa" stop-opacity="0.9"/>
-        <stop offset="100%" stop-color="#334455" stop-opacity="0.4"/>
-      </linearGradient>
-      <!-- Scrolling sleepers -->
-      <pattern id="sleepers" x="0" y="0" width="80" height="20" patternUnits="userSpaceOnUse">
-        <rect x="5" y="6" width="70" height="8" rx="2" fill="#2a3a4a" stroke="#3a4a5a" stroke-width="0.5"/>
-      </pattern>
-    </defs>
-    <!-- Ballast / gravel bed -->
-    <rect x="0" y="50" width="1440" height="250" fill="rgba(30,40,55,0.8)"/>
-    <!-- Left rail -->
-    <rect x="0" y="55" width="1440" height="6" fill="url(#railGrad)" rx="1"/>
-    <!-- Right rail -->
-    <rect x="0" y="68" width="1440" height="6" fill="url(#railGrad)" rx="1"/>
-    <!-- Rail highlights -->
-    <rect x="0" y="55" width="1440" height="2" fill="rgba(180,220,255,0.4)" rx="1"/>
-    <rect x="0" y="68" width="1440" height="2" fill="rgba(180,220,255,0.4)" rx="1"/>
-    <!-- Sleepers -->
-    <rect x="0" y="50" width="1440" height="30" fill="url(#sleepers)" opacity="0.6"/>
-    <!-- Ground reflections under train -->
-    <ellipse cx="720" cy="62" rx="300" ry="8" fill="rgba(0,100,255,0.15)" filter="url(#blur)"/>
-  </svg>
-</div>
-
-<!-- Catenary (overhead wire) -->
-
-<svg style="position:absolute;top:12%;left:0;width:200%;height:12%;animation:slideWire 1.5s linear infinite;pointer-events:none;" viewBox="0 0 2880 80" preserveAspectRatio="none">
-  <!-- Main wire -->
-  <path d="M0,20 Q72,35 144,20 Q216,5 288,20 Q360,35 432,20 Q504,5 576,20 Q648,35 720,20 Q792,5 864,20 Q936,35 1008,20 Q1080,5 1152,20 Q1224,35 1296,20 Q1368,5 1440,20 Q1512,35 1584,20 Q1656,5 1728,20 Q1800,35 1872,20 Q1944,5 2016,20 Q2088,35 2160,20 Q2232,5 2304,20 Q2376,35 2448,20 Q2520,5 2592,20 Q2664,35 2736,20 Q2808,5 2880,20"
-    stroke="rgba(180,200,220,0.5)" stroke-width="1.5" fill="none"/>
-  <!-- Contact wire (lower) -->
-  <path d="M0,35 Q72,45 144,35 Q216,25 288,35 Q360,45 432,35 Q504,25 576,35 Q648,45 720,35 Q792,25 864,35 Q936,45 1008,35 Q1080,25 1152,35 Q1224,45 1296,35 Q1368,25 1440,35 Q1512,45 1584,35 Q1656,25 1728,35 Q1800,45 1872,35 Q1944,25 2016,35 Q2088,45 2160,35 Q2232,25 2304,35 Q2376,45 2448,35 Q2520,25 2592,35 Q2664,45 2736,35 Q2808,25 2880,35"
-    stroke="rgba(160,190,220,0.6)" stroke-width="1" fill="none"/>
-  <!-- Poles -->
-  <g stroke="rgba(80,110,140,0.5)" stroke-width="2">
-    <line x1="0" y1="0" x2="0" y2="80"/>
-    <line x1="144" y1="0" x2="144" y2="80"/>
-    <line x1="288" y1="0" x2="288" y2="80"/>
-    <line x1="432" y1="0" x2="432" y2="80"/>
-    <line x1="576" y1="0" x2="576" y2="80"/>
-    <line x1="720" y1="0" x2="720" y2="80"/>
-    <line x1="864" y1="0" x2="864" y2="80"/>
-    <line x1="1008" y1="0" x2="1008" y2="80"/>
-    <line x1="1152" y1="0" x2="1152" y2="80"/>
-    <line x1="1296" y1="0" x2="1296" y2="80"/>
-    <line x1="1440" y1="0" x2="1440" y2="80"/>
-    <line x1="1584" y1="0" x2="1584" y2="80"/>
-    <line x1="1728" y1="0" x2="1728" y2="80"/>
-    <line x1="1872" y1="0" x2="1872" y2="80"/>
-    <line x1="2016" y1="0" x2="2016" y2="80"/>
-    <line x1="2160" y1="0" x2="2160" y2="80"/>
-    <line x1="2304" y1="0" x2="2304" y2="80"/>
-    <line x1="2448" y1="0" x2="2448" y2="80"/>
-    <line x1="2592" y1="0" x2="2592" y2="80"/>
-    <line x1="2736" y1="0" x2="2736" y2="80"/>
-    <line x1="2880" y1="0" x2="2880" y2="80"/>
-  </g>
-</svg>
-
-<!-- Speed lines background -->
-
-<div class="speed-lines" id="speedLines"></div>
-
-<!-- TRAIN SCENE -->
-
-<div class="train-scene">
-  <div class="train" id="train">
-
-```
-<!-- Motion blur -->
-<div class="motion-blur"></div>
-<div class="ground-dust"></div>
-
-<!-- ══ LOCOMOTIVE (Eurostar-style pointed nose) ══ -->
-<div class="loco">
-  <svg viewBox="0 0 260 110" fill="none" overflow="visible">
-    <defs>
-      <linearGradient id="locoBody" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#d0dce8"/>
-        <stop offset="40%" stop-color="#e8f0f8"/>
-        <stop offset="75%" stop-color="#c0ccd8"/>
-        <stop offset="100%" stop-color="#8899aa"/>
-      </linearGradient>
-      <linearGradient id="locoTop" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1a2a40"/>
-        <stop offset="100%" stop-color="#0a1520"/>
-      </linearGradient>
-      <linearGradient id="noseGrad" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#a0b0c0"/>
-        <stop offset="60%" stop-color="#dde8f0"/>
-        <stop offset="100%" stop-color="#c0ccd8"/>
-      </linearGradient>
-      <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="rgba(120,180,240,0.6)"/>
-        <stop offset="100%" stop-color="rgba(60,120,200,0.3)"/>
-      </linearGradient>
-      <linearGradient id="blueStripe" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#0044bb"/>
-        <stop offset="100%" stop-color="#0066dd"/>
-      </linearGradient>
-      <linearGradient id="orangeStripe" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#cc4400"/>
-        <stop offset="100%" stop-color="#ff6600"/>
-      </linearGradient>
-      <filter id="glow">
-        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="headlightGlow">
-        <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
-        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-
-    <!-- ── BODY ── -->
-    <!-- Main fuselage -->
-    <path d="M50,15 L245,15 L245,88 L50,88 Z" fill="url(#locoBody)" stroke="#9aabad" stroke-width="0.5"/>
-
-    <!-- Pointed nose (Eurostar style) -->
-    <path d="M50,15 Q20,25 5,50 Q20,75 50,88 L50,15 Z" fill="url(#noseGrad)" stroke="#8899aa" stroke-width="0.5"/>
-
-    <!-- Roof section (dark) -->
-    <rect x="50" y="10" width="195" height="20" rx="3" fill="url(#locoTop)"/>
-    <path d="M50,10 Q30,12 15,30 L50,30 Z" fill="url(#locoTop)"/>
-
-    <!-- Blue accent stripe (Eurostar style) -->
-    <rect x="5" y="42" width="240" height="14" fill="url(#blueStripe)" opacity="0.95"/>
-    <!-- Nose blue -->
-    <path d="M5,42 Q2,48 5,56 L5,42 Z" fill="#0044bb"/>
-
-    <!-- Orange lower accent -->
-    <rect x="50" y="75" width="195" height="8" fill="url(#orangeStripe)" opacity="0.85"/>
-
-    <!-- ── WINDSCREEN ── -->
-    <path d="M50,18 Q35,22 22,38 L50,38 Z" fill="url(#glassGrad)" stroke="rgba(160,210,255,0.4)" stroke-width="0.8"/>
-    <!-- Glass reflection -->
-    <path d="M50,20 Q38,24 26,36 L38,36 Q45,28 50,24 Z" fill="rgba(255,255,255,0.2)"/>
-
-    <!-- ── SIDE WINDOWS (passenger section) ── -->
-    <rect x="80"  y="20" width="26" height="16" rx="2" fill="url(#glassGrad)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="116" y="20" width="26" height="16" rx="2" fill="url(#glassGrad)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="152" y="20" width="26" height="16" rx="2" fill="url(#glassGrad)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="188" y="20" width="26" height="16" rx="2" fill="url(#glassGrad)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="220" y="20" width="20" height="16" rx="2" fill="url(#glassGrad)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <!-- Window reflections -->
-    <rect x="81"  y="21" width="8" height="5" rx="1" fill="rgba(255,255,255,0.25)"/>
-    <rect x="117" y="21" width="8" height="5" rx="1" fill="rgba(255,255,255,0.25)"/>
-    <rect x="153" y="21" width="8" height="5" rx="1" fill="rgba(255,255,255,0.25)"/>
-    <rect x="189" y="21" width="8" height="5" rx="1" fill="rgba(255,255,255,0.25)"/>
-
-    <!-- ── HEADLIGHTS ── -->
-    <circle cx="12" cy="42" r="5" fill="#fffce0" filter="url(#headlightGlow)" opacity="0.9"/>
-    <circle cx="12" cy="58" r="4" fill="#ffe080" filter="url(#headlightGlow)" opacity="0.8"/>
-    <!-- Headlight beam -->
-    <path d="M12,42 L-30,28 L-20,56 L12,42 Z" fill="rgba(255,250,200,0.06)"/>
-
-    <!-- ── EGK LOGO EMBEDDED ── -->
-    <image href="https://egkhor.com.my/home/wp-content/uploads/2026/02/cropped-IMG_7598.png"
-      x="155" y="46" width="70" height="26"
-      class="egk-logo-img"
-      preserveAspectRatio="xMidYMid meet"
-      style="filter: brightness(1.1) contrast(1.05);"/>
-
-    <!-- ── PANTOGRAPH ── -->
-    <line x1="180" y1="10" x2="175" y2="-18" stroke="#6688aa" stroke-width="1.5"/>
-    <line x1="175" y1="-18" x2="160" y2="-28" stroke="#6688aa" stroke-width="1.5"/>
-    <line x1="160" y1="-28" x2="195" y2="-28" stroke="#8899bb" stroke-width="2"/>
-    <line x1="175" y1="-18" x2="190" y2="-28" stroke="#6688aa" stroke-width="1"/>
-    <circle cx="160" cy="-28" r="2" fill="#aabbcc"/>
-    <circle cx="195" cy="-28" r="2" fill="#aabbcc"/>
-    <!-- Pantograph spark -->
-    <g filter="url(#glow)" style="animation: spark 0.15s linear infinite alternate;">
-      <circle cx="177" cy="-28" r="3" fill="#88ddff" opacity="0.9"/>
-      <circle cx="177" cy="-28" r="1.5" fill="white"/>
-    </g>
-
-    <!-- ── UNDERCARRIAGE ── -->
-    <rect x="20" y="85" width="225" height="8" rx="2" fill="#1a2030" stroke="#2a3040" stroke-width="0.5"/>
-
-    <!-- ── BOGIES / WHEELS ── -->
-    <!-- Front bogie -->
-    <g transform="translate(60, 93)">
-      <rect x="-25" y="0" width="50" height="8" rx="2" fill="#1a2535"/>
-      <circle cx="-14" cy="10" r="8" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-14" cy="10" r="3" fill="#2a3a50"/>
-      <line x1="-14" y1="2" x2="-14" y2="18" stroke="#3a5070" stroke-width="1" class="wheel-spin" style="transform-origin:-14px 10px"/>
-      <line x1="-22" y1="10" x2="-6" y2="10" stroke="#3a5070" stroke-width="1" class="wheel-spin" style="transform-origin:-14px 10px"/>
-      <circle cx="14" cy="10" r="8" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="14" cy="10" r="3" fill="#2a3a50"/>
-      <line x1="14" y1="2" x2="14" y2="18" stroke="#3a5070" stroke-width="1" class="wheel-spin" style="transform-origin:14px 10px"/>
-      <line x1="6" y1="10" x2="22" y2="10" stroke="#3a5070" stroke-width="1" class="wheel-spin" style="transform-origin:14px 10px"/>
-    </g>
-    <!-- Rear bogie -->
-    <g transform="translate(200, 93)">
-      <rect x="-25" y="0" width="50" height="8" rx="2" fill="#1a2535"/>
-      <circle cx="-14" cy="10" r="8" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-14" cy="10" r="3" fill="#2a3a50"/>
-      <line x1="-14" y1="2" x2="-14" y2="18" stroke="#3a5070" stroke-width="1" class="wheel-spin" style="transform-origin:-14px 10px"/>
-      <line x1="-22" y1="10" x2="-6" y2="10" stroke="#3a5070" stroke-width="1" class="wheel-spin" style="transform-origin:-14px 10px"/>
-      <circle cx="14" cy="10" r="8" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="14" cy="10" r="3" fill="#2a3a50"/>
-      <line x1="14" y1="2" x2="14" y2="18" stroke="#3a5070" stroke-width="1" class="wheel-spin" style="transform-origin:14px 10px"/>
-      <line x1="6" y1="10" x2="22" y2="10" stroke="#3a5070" stroke-width="1" class="wheel-spin" style="transform-origin:14px 10px"/>
-    </g>
-
-    <!-- Ground reflection/glow -->
-    <ellipse cx="130" cy="108" rx="120" ry="6" fill="rgba(0,80,200,0.2)" filter="url(#glow)"/>
-
-    <!-- Speed indicator light strip -->
-    <rect x="50" y="56" width="195" height="3" rx="1" fill="rgba(0,150,255,0.4)"/>
-  </svg>
-</div>
-
-<!-- ══ PASSENGER CAR 1 ══ -->
-<div class="pax">
-  <svg viewBox="0 0 180 88" fill="none" overflow="visible">
-    <defs>
-      <linearGradient id="paxBody" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#c8d8e8"/>
-        <stop offset="35%" stop-color="#e0ecf8"/>
-        <stop offset="72%" stop-color="#b8c8d8"/>
-        <stop offset="100%" stop-color="#7888a0"/>
-      </linearGradient>
-    </defs>
-    <!-- Body -->
-    <rect x="0" y="12" width="180" height="70" fill="url(#paxBody)" stroke="#9aabad" stroke-width="0.5"/>
-    <!-- Roof -->
-    <rect x="0" y="8" width="180" height="18" rx="2" fill="#1a2a40"/>
-    <!-- Blue stripe -->
-    <rect x="0" y="40" width="180" height="13" fill="#0044bb" opacity="0.9"/>
-    <!-- Orange lower -->
-    <rect x="0" y="73" width="180" height="7" fill="#ff6600" opacity="0.85"/>
-    <!-- Windows -->
-    <rect x="10"  y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="42"  y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="74"  y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="106" y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="138" y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <!-- Window shine -->
-    <rect x="11" y="17" width="7" height="5" rx="1" fill="rgba(255,255,255,0.2)"/>
-    <rect x="43" y="17" width="7" height="5" rx="1" fill="rgba(255,255,255,0.2)"/>
-    <rect x="75" y="17" width="7" height="5" rx="1" fill="rgba(255,255,255,0.2)"/>
-    <rect x="107" y="17" width="7" height="5" rx="1" fill="rgba(255,255,255,0.2)"/>
-    <!-- Passenger silhouettes in windows -->
-    <circle cx="18" cy="22" r="4" fill="rgba(40,60,100,0.5)"/>
-    <circle cx="50" cy="22" r="4" fill="rgba(40,60,100,0.5)"/>
-    <circle cx="82" cy="22" r="4" fill="rgba(40,60,100,0.5)"/>
-    <!-- Door -->
-    <rect x="160" y="15" width="15" height="60" rx="1" fill="rgba(150,170,190,0.4)" stroke="rgba(130,150,170,0.5)" stroke-width="0.5"/>
-    <!-- Undercarriage + bogies -->
-    <rect x="0" y="80" width="180" height="6" rx="1" fill="#1a2030"/>
-    <!-- Bogie 1 -->
-    <g transform="translate(40, 86)">
-      <rect x="-22" y="0" width="44" height="7" rx="2" fill="#1a2535"/>
-      <circle cx="-12" cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-12" cy="9" r="2.5" fill="#2a3a50"/>
-      <circle cx="12"  cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="12"  cy="9" r="2.5" fill="#2a3a50"/>
-    </g>
-    <!-- Bogie 2 -->
-    <g transform="translate(140, 86)">
-      <rect x="-22" y="0" width="44" height="7" rx="2" fill="#1a2535"/>
-      <circle cx="-12" cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-12" cy="9" r="2.5" fill="#2a3a50"/>
-      <circle cx="12"  cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="12"  cy="9" r="2.5" fill="#2a3a50"/>
-    </g>
-    <!-- Speed strip -->
-    <rect x="0" y="53" width="180" height="2" rx="1" fill="rgba(0,150,255,0.35)"/>
-    <ellipse cx="90" cy="105" rx="80" ry="5" fill="rgba(0,80,200,0.15)"/>
-  </svg>
-</div>
-
-<!-- ══ CARGO CAR ══ -->
-<div class="car">
-  <svg viewBox="0 0 190 90" fill="none" overflow="visible">
-    <defs>
-      <linearGradient id="cargoBody" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#b0c0cc"/>
-        <stop offset="50%" stop-color="#c8d4dc"/>
-        <stop offset="100%" stop-color="#6a7a88"/>
-      </linearGradient>
-      <linearGradient id="cargoContainer" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#c85500"/>
-        <stop offset="50%" stop-color="#e86000"/>
-        <stop offset="100%" stop-color="#a04000"/>
-      </linearGradient>
-      <linearGradient id="cargoContainer2" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1144aa"/>
-        <stop offset="50%" stop-color="#1a55cc"/>
-        <stop offset="100%" stop-color="#0a3080"/>
-      </linearGradient>
-    </defs>
-    <!-- Flatbed -->
-    <rect x="0" y="60" width="190" height="14" fill="url(#cargoBody)" stroke="#8a9aaa" stroke-width="0.5"/>
-    <!-- Container 1 (orange - EGK freight) -->
-    <rect x="5"  y="12" width="85" height="50" rx="2" fill="url(#cargoContainer)"/>
-    <rect x="5"  y="12" width="85" height="8"  rx="2" fill="rgba(255,150,80,0.4)"/>
-    <!-- Container ribs -->
-    <line x1="20"  y1="12" x2="20"  y2="62" stroke="rgba(80,30,0,0.4)" stroke-width="1"/>
-    <line x1="35"  y1="12" x2="35"  y2="62" stroke="rgba(80,30,0,0.4)" stroke-width="1"/>
-    <line x1="50"  y1="12" x2="50"  y2="62" stroke="rgba(80,30,0,0.4)" stroke-width="1"/>
-    <line x1="65"  y1="12" x2="65"  y2="62" stroke="rgba(80,30,0,0.4)" stroke-width="1"/>
-    <line x1="80"  y1="12" x2="80"  y2="62" stroke="rgba(80,30,0,0.4)" stroke-width="1"/>
-    <!-- EGK text on cargo container -->
-    <text x="47" y="42" font-family="Bebas Neue, Arial Black" font-size="14" fill="white" text-anchor="middle" opacity="0.9" font-weight="bold">EGK</text>
-    <text x="47" y="54" font-family="Rajdhani, Arial" font-size="6" fill="rgba(255,200,150,0.8)" text-anchor="middle" letter-spacing="1">FREIGHT</text>
-
-    <!-- Container 2 (blue) -->
-    <rect x="100" y="12" width="85" height="50" rx="2" fill="url(#cargoContainer2)"/>
-    <rect x="100" y="12" width="85" height="8"  rx="2" fill="rgba(100,150,220,0.4)"/>
-    <!-- Container ribs -->
-    <line x1="115" y1="12" x2="115" y2="62" stroke="rgba(0,20,60,0.4)" stroke-width="1"/>
-    <line x1="130" y1="12" x2="130" y2="62" stroke="rgba(0,20,60,0.4)" stroke-width="1"/>
-    <line x1="145" y1="12" x2="145" y2="62" stroke="rgba(0,20,60,0.4)" stroke-width="1"/>
-    <line x1="160" y1="12" x2="160" y2="62" stroke="rgba(0,20,60,0.4)" stroke-width="1"/>
-    <line x1="175" y1="12" x2="175" y2="62" stroke="rgba(0,20,60,0.4)" stroke-width="1"/>
-    <text x="142" y="42" font-family="Bebas Neue, Arial Black" font-size="14" fill="white" text-anchor="middle" opacity="0.9" font-weight="bold">CARGO</text>
-    <text x="142" y="54" font-family="Rajdhani, Arial" font-size="6" fill="rgba(150,200,255,0.8)" text-anchor="middle" letter-spacing="1">HIGH-SPEED</text>
-
-    <!-- Undercarriage + bogies -->
-    <rect x="0" y="74" width="190" height="6" rx="1" fill="#1a2030"/>
-    <g transform="translate(45, 80)">
-      <rect x="-22" y="0" width="44" height="7" rx="2" fill="#1a2535"/>
-      <circle cx="-12" cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-12" cy="9" r="2.5" fill="#2a3a50"/>
-      <circle cx="12"  cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="12"  cy="9" r="2.5" fill="#2a3a50"/>
-    </g>
-    <g transform="translate(145, 80)">
-      <rect x="-22" y="0" width="44" height="7" rx="2" fill="#1a2535"/>
-      <circle cx="-12" cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-12" cy="9" r="2.5" fill="#2a3a50"/>
-      <circle cx="12"  cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="12"  cy="9" r="2.5" fill="#2a3a50"/>
-    </g>
-    <ellipse cx="95" cy="105" rx="85" ry="5" fill="rgba(0,80,200,0.12)"/>
-  </svg>
-</div>
-
-<!-- ══ PASSENGER CAR 2 ══ -->
-<div class="pax">
-  <svg viewBox="0 0 180 88" fill="none" overflow="visible">
-    <!-- Body -->
-    <rect x="0" y="12" width="180" height="70" fill="url(#paxBody)" stroke="#9aabad" stroke-width="0.5"/>
-    <!-- Roof -->
-    <rect x="0" y="8" width="180" height="18" rx="2" fill="#1a2a40"/>
-    <!-- Blue stripe -->
-    <rect x="0" y="40" width="180" height="13" fill="#0044bb" opacity="0.9"/>
-    <!-- Orange lower -->
-    <rect x="0" y="73" width="180" height="7" fill="#ff6600" opacity="0.85"/>
-    <!-- Windows -->
-    <rect x="10"  y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="42"  y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="74"  y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0,0.5)" stroke-width="0.8"/>
-    <rect x="74"  y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="106" y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="138" y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <!-- Shine -->
-    <rect x="11" y="17" width="7" height="5" rx="1" fill="rgba(255,255,255,0.2)"/>
-    <rect x="43" y="17" width="7" height="5" rx="1" fill="rgba(255,255,255,0.2)"/>
-    <rect x="75" y="17" width="7" height="5" rx="1" fill="rgba(255,255,255,0.2)"/>
-    <!-- Silhouettes -->
-    <circle cx="18" cy="22" r="4" fill="rgba(40,60,100,0.5)"/>
-    <circle cx="114" cy="22" r="4" fill="rgba(40,60,100,0.5)"/>
-    <circle cx="146" cy="22" r="4" fill="rgba(40,60,100,0.5)"/>
-    <!-- Door -->
-    <rect x="3" y="15" width="5" height="60" rx="1" fill="rgba(150,170,190,0.4)" stroke="rgba(130,150,170,0.5)" stroke-width="0.5"/>
-    <!-- Undercarriage -->
-    <rect x="0" y="80" width="180" height="6" rx="1" fill="#1a2030"/>
-    <g transform="translate(40, 86)">
-      <rect x="-22" y="0" width="44" height="7" rx="2" fill="#1a2535"/>
-      <circle cx="-12" cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-12" cy="9" r="2.5" fill="#2a3a50"/>
-      <circle cx="12"  cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="12"  cy="9" r="2.5" fill="#2a3a50"/>
-    </g>
-    <g transform="translate(140, 86)">
-      <rect x="-22" y="0" width="44" height="7" rx="2" fill="#1a2535"/>
-      <circle cx="-12" cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-12" cy="9" r="2.5" fill="#2a3a50"/>
-      <circle cx="12"  cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="12"  cy="9" r="2.5" fill="#2a3a50"/>
-    </g>
-    <rect x="0" y="53" width="180" height="2" rx="1" fill="rgba(0,150,255,0.35)"/>
-    <ellipse cx="90" cy="105" rx="80" ry="5" fill="rgba(0,80,200,0.15)"/>
-  </svg>
-</div>
-
-<!-- ══ TAIL (Eurostar rear) ══ -->
-<div class="tail">
-  <svg viewBox="0 0 140 110" fill="none" overflow="visible">
-    <defs>
-      <linearGradient id="tailGrad" x1="1" y1="0" x2="0" y2="0">
-        <stop offset="0%" stop-color="#c0ccd8"/>
-        <stop offset="60%" stop-color="#e0ecf8"/>
-        <stop offset="100%" stop-color="#a0b0c0"/>
-      </linearGradient>
-      <linearGradient id="tailNose" x1="1" y1="0" x2="0" y2="0">
-        <stop offset="0%" stop-color="#a0b0c0"/>
-        <stop offset="40%" stop-color="#dde8f0"/>
-        <stop offset="100%" stop-color="#c0ccd8"/>
-      </linearGradient>
-    </defs>
-    <!-- Body -->
-    <path d="M0,15 L90,15 L90,88 L0,88 Z" fill="url(#tailGrad)" stroke="#9aabad" stroke-width="0.5"/>
-    <!-- Pointed tail nose -->
-    <path d="M90,15 Q110,25 135,50 Q110,75 90,88 L90,15 Z" fill="url(#tailNose)" stroke="#8899aa" stroke-width="0.5"/>
-    <!-- Roof -->
-    <rect x="0" y="10" width="90" height="20" rx="2" fill="#1a2a40"/>
-    <path d="M90,10 Q110,12 128,30 L90,30 Z" fill="#1a2a40"/>
-    <!-- Blue stripe -->
-    <rect x="0" y="42" width="135" height="14" fill="#0044bb" opacity="0.9"/>
-    <path d="M135,42 Q137,48 135,56 L135,42 Z" fill="#0044bb"/>
-    <!-- Orange lower -->
-    <rect x="0" y="75" width="90" height="8" fill="#ff6600" opacity="0.85"/>
-    <!-- Rear windows -->
-    <rect x="10" y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="42" y="16" width="22" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <rect x="68" y="16" width="18" height="16" rx="2" fill="rgba(100,160,220,0.5)" stroke="rgba(160,200,240,0.5)" stroke-width="0.8"/>
-    <!-- Rear windscreen -->
-    <path d="M90,18 Q105,22 118,38 L90,38 Z" fill="rgba(100,160,220,0.45)" stroke="rgba(160,210,255,0.4)" stroke-width="0.8"/>
-    <!-- Tail lights -->
-    <circle cx="128" cy="42" r="5" fill="#ff2200" opacity="0.9"/>
-    <circle cx="128" cy="58" r="4" fill="#ff4400" opacity="0.8"/>
-    <!-- Tail light glow -->
-    <circle cx="128" cy="42" r="9" fill="rgba(255,50,0,0.2)"/>
-    <!-- Undercarriage -->
-    <rect x="0" y="85" width="90" height="8" rx="2" fill="#1a2030" stroke="#2a3040" stroke-width="0.5"/>
-    <!-- Bogies -->
-    <g transform="translate(30, 93)">
-      <rect x="-22" y="0" width="44" height="7" rx="2" fill="#1a2535"/>
-      <circle cx="-12" cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-12" cy="9" r="2.5" fill="#2a3a50"/>
-      <circle cx="12"  cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="12"  cy="9" r="2.5" fill="#2a3a50"/>
-    </g>
-    <g transform="translate(78, 93)">
-      <rect x="-22" y="0" width="44" height="7" rx="2" fill="#1a2535"/>
-      <circle cx="-12" cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="-12" cy="9" r="2.5" fill="#2a3a50"/>
-      <circle cx="12"  cy="9" r="7" fill="#1a2030" stroke="#3a5070" stroke-width="1.5" class="wheel-spin"/>
-      <circle cx="12"  cy="9" r="2.5" fill="#2a3a50"/>
-    </g>
-    <!-- Rear tail glow -->
-    <ellipse cx="70" cy="108" rx="70" ry="5" fill="rgba(0,80,200,0.18)"/>
-  </svg>
-</div>
-```
-
-  </div><!-- /.train -->
-</div><!-- /.train-scene -->
-
-<!-- HUD -->
-
-<div class="hud">
-  <div class="hud-panel">
-    <div class="hud-label">Speed</div>
-    <div class="hud-value"><span id="speedVal">320</span><span class="hud-unit"> km/h</span></div>
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <img class="logo" src="https://egkhor.com.my/home/wp-content/uploads/2026/02/cropped-IMG_7598.png" alt="EGK">
+    <span class="nav-brand-text">EGK Business Suite</span>
   </div>
+  <ul class="nav-links">
+    <li><a href="#apps">19 Apps</a></li>
+    <li><a href="#pillars">Why EGK</a></li>
+    <li><a href="#founder">About</a></li>
+    <li><a href="https://apps.apple.com/my/app/egk-isaacblue-ai-bot/id6745467135" target="_blank" class="nav-cta">🚀 Get Started</a></li>
+  </ul>
+</nav>
 
-  <div class="hud-panel hud-center">
-    <div class="route-text">EGK Rail Express</div>
-    <div class="route-line">
-      <div class="route-dot"></div>
-      <div class="route-dash"></div>
-      <span style="font-family:'Rajdhani';font-size:11px;color:rgba(150,200,255,0.9);letter-spacing:2px;">EN ROUTE</span>
-      <div class="route-dash"></div>
-      <div class="route-dot"></div>
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <canvas id="biz-canvas"></canvas>
+  <div class="hero-inner container">
+    <div>
+      <div class="hero-eyebrow"><span class="pdot"></span>EGK Business Suite · iOS Apps</div>
+      <h1 class="hero-title">
+        Run Your Business<br>
+        with <span class="cyan">AI</span> &amp; <span class="gold">Precision.</span>
+      </h1>
+      <p class="hero-sub">19 purpose-built iOS apps covering AI, finance, tax, operations, logistics, analytics, and productivity — designed for Malaysian businesses ready to move faster.</p>
+      <div class="hero-btns">
+        <a href="#apps" class="btn btn-cyan">💼 Explore 19 Apps</a>
+        <a href="#pillars" class="btn btn-gold">✨ Why EGK Business</a>
+        <a href="#founder" class="btn btn-ghost">ℹ️ About EGK</a>
+      </div>
+      <div class="hero-tags">
+        <span class="htag">🤖 IsaacBlue AI Bot</span>
+        <span class="htag">💰 Tax & LHDN</span>
+        <span class="htag">📊 Analytics AI</span>
+        <span class="htag">🚢 Logistics & Shipment</span>
+        <span class="htag">💹 ForexVision AI</span>
+        <span class="htag">🍎 iOS Only</span>
+        <span class="htag">🇲🇾 EGK Penang</span>
+      </div>
     </div>
-    <div style="margin-top:4px;font-family:'Bebas Neue';font-size:16px;color:#66aaee;letter-spacing:3px;">
-      PENANG ── KUALA LUMPUR
+    <div class="hero-right">
+      <img class="hero-mushi" src="https://egkhor.com.my/home/wp-content/uploads/2026/04/MUSHI.png" alt="Mushi">
+      <div class="hero-stats-box">
+        <div class="hsb-title">📱 EGK Business App Categories</div>
+        <div class="hsb-row"><span class="hsb-dot" style="background:#B090FF"></span>AI Intelligence — IsaacBlue, InsightAI, CrisisOracle</div>
+        <div class="hsb-row"><span class="hsb-dot" style="background:#FFB800"></span>Finance & Tax — MyTaxAI, LHDN EA, AccDash</div>
+        <div class="hsb-row"><span class="hsb-dot" style="background:#00C8FF"></span>Operations — Project Mgmt, Cost Control, SRM</div>
+        <div class="hsb-row"><span class="hsb-dot" style="background:#00DD88"></span>Logistics — Shipment Dash, ParcelMark, FlightLive</div>
+        <div class="hsb-row"><span class="hsb-dot" style="background:#FF8C00"></span>Analytics — ForexVision, MingPan AI, SlideCraft</div>
+        <div class="hsb-row"><span class="hsb-dot" style="background:#00E8B0"></span>Productivity — POSMaster, Asset Tracker, RetainAI</div>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="hud-panel" style="text-align:right">
-    <div class="hud-label">Power Output</div>
-    <div class="hud-value"><span id="powerVal">12.2</span><span class="hud-unit"> MW</span></div>
+<!-- STATS STRIP -->
+<div class="sstrip">
+  <div class="sstrip-inner">
+    <div class="ss"><span class="ss-n">19</span><span class="ss-l">Business Apps</span></div>
+    <div class="ss"><span class="ss-n">🍎</span><span class="ss-l">iOS Only</span></div>
+    <div class="ss"><span class="ss-n">AI</span><span class="ss-l">Powered Core</span></div>
+    <div class="ss"><span class="ss-n">🇲🇾</span><span class="ss-l">Malaysia-First</span></div>
+    <div class="ss"><span class="ss-n">💰</span><span class="ss-l">Tax & Finance</span></div>
+    <div class="ss"><span class="ss-n">🚢</span><span class="ss-l">Logistics Suite</span></div>
   </div>
 </div>
 
-<!-- Status bar -->
+<!-- ══ APPS ══ -->
+<section id="apps">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="sec-label">The Business Apps</div>
+      <h2 class="sec-title">19 Apps. Every <span>Business Function.</span></h2>
+      <p class="sec-desc" style="margin:0 auto;">From AI-powered intelligence to tax compliance, logistics tracking to POS systems — EGK Business Suite covers every critical workflow your company needs.</p>
+    </div>
 
-<div class="status-bar">
-  <div class="status-item">
-    <div class="status-dot green"></div>
-    <span class="status-text">Propulsion: Nominal</span>
-  </div>
-  <div class="status-item">
-    <div class="status-dot blue"></div>
-    <span class="status-text">Pantograph: Active</span>
-  </div>
-  <div class="status-item">
-    <div class="status-dot orange"></div>
-    <span class="status-text">EGK Rail System</span>
-  </div>
-</div>
+    <div class="cat-filter">
+      <div class="cf active" onclick="filterApps('all',this)">💼 All 19 Apps</div>
+      <div class="cf" onclick="filterApps('ai',this)">🤖 AI</div>
+      <div class="cf" onclick="filterApps('finance',this)">💰 Finance</div>
+      <div class="cf" onclick="filterApps('ops',this)">⚙️ Operations</div>
+      <div class="cf" onclick="filterApps('logistics',this)">🚢 Logistics</div>
+      <div class="cf" onclick="filterApps('analytics',this)">📊 Analytics</div>
+      <div class="cf" onclick="filterApps('productivity',this)">✅ Productivity</div>
+    </div>
 
-<!-- Scanlines -->
+    <div class="apps-grid" id="appsGrid"></div>
 
-<div class="scanlines"></div>
-<!-- Vignette -->
-<div class="vignette"></div>
+    <!-- Mushi note -->
+    <div style="margin-top:28px;text-align:center;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;" class="reveal">
+      <img src="https://egkhor.com.my/home/wp-content/uploads/2026/04/MUSHI.png" style="width:54px;animation:musf 4s ease-in-out infinite;filter:drop-shadow(0 5px 12px rgba(0,200,255,.25));" alt="Mushi">
+      <p style="font-size:.86rem;color:var(--dim);max-width:460px;line-height:1.7;font-style:italic;">
+        <strong style="color:var(--gold)">Mushi says:</strong> "Run smarter, grow faster! Every EGK Business app is crafted to save you time and give you insights that matter. 🌸✨"
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MUSHI CTA ══ -->
+<section id="mushi-cta">
+  <div class="mc-blob mb1"></div>
+  <div class="mc-blob mb2"></div>
+  <div class="mc-inner reveal">
+    <img class="mc-mushi" src="https://egkhor.com.my/home/wp-content/uploads/2026/04/MUSHI.png" alt="Mushi">
+    <p class="mc-quote">
+      "Your business deserves <span class="cyan">AI intelligence</span>,<br>
+      <span class="gold">tax compliance</span>, real-time logistics,<br>
+      and the tools to <strong style="color:var(--white)">move at the speed of opportunity.</strong> 🌸"
+    </p>
+    <p style="font-size:.8rem;color:var(--dim);margin-bottom:18px;">EGK Business Suite — all on iOS, all built for Malaysia.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+      <a href="https://apps.apple.com/my/app/egk-isaacblue-ai-bot/id6745467135" target="_blank" class="btn btn-cyan">🤖 Start with IsaacBlue AI</a>
+      <a href="https://apps.apple.com/my/app/egk-lhdn-ea/id6759787470" target="_blank" class="btn btn-gold">💰 LHDN EA App</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PILLARS ══ -->
+<section id="pillars">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="sec-label">Why EGK Business</div>
+      <h2 class="sec-title">Built for <span class="gold">Malaysian Business</span></h2>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar reveal"><div class="p-icon">🤖</div><div class="p-title">AI at the Core</div><div class="p-body">IsaacBlue AI Bot, InsightAI, CrisisOracle, ForexVision — intelligent decision support built into your workflow.</div></div>
+      <div class="pillar reveal"><div class="p-icon">🇲🇾</div><div class="p-title">Malaysia-First Design</div><div class="p-body">LHDN EA, MyTaxAI and all finance apps are built for Malaysian tax laws, compliance requirements, and business norms.</div></div>
+      <div class="pillar reveal"><div class="p-icon">🔗</div><div class="p-title">End-to-End Coverage</div><div class="p-body">From POS to project management, shipment tracking to forex — one ecosystem covering every business function.</div></div>
+      <div class="pillar reveal"><div class="p-icon">🍎</div><div class="p-title">iOS-Native Excellence</div><div class="p-body">Every app is crafted as a native iOS experience — fast, secure, and designed for iPhone and iPad productivity.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOUNDER ══ -->
+<section id="founder">
+  <div class="container">
+    <div class="founder-grid">
+      <div class="founder-card reveal">
+        <img class="fc-mushi" src="https://egkhor.com.my/home/wp-content/uploads/2026/04/MUSHI.png" alt="Mushi">
+        <div class="fc-name">Isaac Khor Eng Gian</div>
+        <div class="fc-role">Founder, Developer & CEO</div>
+        <img class="fc-logo" src="https://egkhor.com.my/home/wp-content/uploads/2026/02/cropped-IMG_7598.png" alt="EGK">
+        <div class="fc-contacts">
+          <div class="fci">📍 Penang, Malaysia</div>
+          <div class="fci">📞 +604-505 9700</div>
+          <div class="fci">✉️ <a href="mailto:sales@egkhor.com.my" style="color:var(--cyan)">sales@egkhor.com.my</a></div>
+          <div class="fci">🌐 <a href="https://egkhor.com.my" target="_blank" style="color:var(--cyan)">egkhor.com.my</a></div>
+        </div>
+      </div>
+      <div class="founder-text reveal">
+        <div class="sec-label">About EGK</div>
+        <h2 class="sec-title">Penang-Built. <span>Malaysia-Proud.</span></h2>
+        <blockquote>"EGK Business Suite was built on one conviction: Malaysian businesses deserve enterprise-grade tools that understand local needs — tax law, logistics, culture, and the pace of our market. Every app is crafted with that mission."</blockquote>
+        <p>EGK Microelectronic Solutions Group Sdn. Bhd. builds across multiple domains — from business productivity and AI tools to STEM AR education, humanitarian resilience apps, transport guides, and nuclear AI research. The Business Suite is EGK's commitment to empowering Malaysian enterprises of all sizes.</p>
+        <div class="fp">
+          <span class="fpp">💼 19 Business Apps</span>
+          <span class="fpp">🤖 AI Suite</span>
+          <span class="fpp">🥽 59 STEM AR Modules</span>
+          <span class="fpp">🛡️ Anti-Bully</span>
+          <span class="fpp">🌍 EHRI Humanitarian</span>
+          <span class="fpp">🚉 Transport Apps</span>
+          <span class="fpp">⚛️ Nuclear AI</span>
+          <span class="fpp">🌋 Scientific Series</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="fl-logo"><img src="https://egkhor.com.my/home/wp-content/uploads/2026/02/cropped-IMG_7598.png" alt="EGK"></div>
+      <div class="fl-about">EGK Microelectronic Solutions Group Sdn. Bhd.<br>EGK Business Suite · 19 iOS Apps · AI · Finance · Operations · Logistics<br>Co. Reg: 202501002992 (1604405-X)<br>© 2026 EGK Microelectronic Solutions Group Sdn. Bhd.</div>
+    </div>
+    <div>
+      <div class="fl-title">Top Apps</div>
+      <ul class="fl-links">
+        <li><a href="https://apps.apple.com/my/app/egk-isaacblue-ai-bot/id6745467135" target="_blank">🤖 IsaacBlue AI Bot</a></li>
+        <li><a href="https://apps.apple.com/my/app/egk-lhdn-ea/id6759787470" target="_blank">💰 LHDN EA</a></li>
+        <li><a href="https://apps.apple.com/my/app/egk-forexvision-ai/id6760966550" target="_blank">💹 ForexVision AI</a></li>
+        <li><a href="https://apps.apple.com/my/app/egkcrisisoracleai/id6760585768" target="_blank">🔮 CrisisOracle AI</a></li>
+        <li><a href="https://apps.apple.com/my/app/egk-project-management/id6744937272" target="_blank">📋 Project Management</a></li>
+        <li><a href="https://apps.apple.com/my/app/egkposmaster/id6746720210" target="_blank">🛒 POSMaster</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fl-title">Contact</div>
+      <ul class="fl-links">
+        <li><a href="https://egkhor.com.my" target="_blank">🌐 EGK Website</a></li>
+        <li><a href="mailto:sales@egkhor.com.my">✉️ Email Us</a></li>
+        <li><a href="tel:+60450597000">📞 +604-505 9700</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fb">
+    <span>© 2026 EGK Microelectronic Solutions Group Sdn. Bhd. · 🇲🇾 Penang</span>
+    <span style="color:var(--cyan)">💼 EGK Business Suite · Run Smarter.</span>
+  </div>
+</footer>
 
 <script>
-// ── Generate stars ──
-const starsEl = document.getElementById('stars');
-for (let i = 0; i < 120; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  const size = Math.random() * 2.2 + 0.4;
-  s.style.cssText = `
-    width:${size}px; height:${size}px;
-    left:${Math.random()*100}%;
-    top:${Math.random()*100}%;
-    animation-delay:${Math.random()*4}s;
-    animation-duration:${2+Math.random()*3}s;
-  `;
-  starsEl.appendChild(s);
+// ══ APPS DATA ══
+const appsData = [
+  {name:"EGK IsaacBlue AI Bot",cat:"ai",catLabel:"AI",icon:"https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/14/4f/1f/144f1f91-c293-755a-1cf6-ccaf33b98cab/Placeholder.mill/400x400bb-75.webp",ios:"https://apps.apple.com/my/app/egk-isaacblue-ai-bot/id6745467135",platform:"iOS",desc:"Your AI-powered business intelligence companion — ask anything, get instant strategic insights, analysis, and recommendations.",glow:"#7040FF"},
+  {name:"EGK MyTaxAI",cat:"finance",catLabel:"Finance",icon:"https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a1/b8/54/a1b8544e-ccb5-a28d-a221-0d7b1875221b/Placeholder.mill/400x400bb-75.webp",ios:"https://apps.apple.com/my/app/egk-isaacblue-ai-bot/id6745467135",platform:"iOS",desc:"AI-powered Malaysian tax assistant — calculate, plan, and optimize your tax obligations with smart LHDN-aligned guidance.",glow:"#FFB800"},
+  {name:"EGK LHDN EA",cat:"finance",catLabel:"Finance",icon:"https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/92/ef/7d/92ef7daa-b159-cfdd-c539-908b474abd04/Placeholder.mill/400x400bb-75.webp",ios:"https://apps.apple.com/my/app/egk-lhdn-ea/id6759787470",platform:"iOS",desc:"EA form generation and LHDN compliance — streamline your Malaysian employee tax documentation and employer returns.",glow:"#FFB800"},
+  {name:"EGK Microelectronic SB",cat:"ops",catLabel:"Operations",icon:"https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/87/cd/63/87cd6338-5142-cb54-e5b3-fce36661f21b/Placeholder.mill/400x400bb-75.webp",ios:"https://apps.apple.com/my/app/egk-microelectronic-sb/id6752218755",platform:"iOS",desc:"EGK's core strategic business intelligence platform for microelectronics and technology sector operations management.",glow:"#00C8FF"},
+  {name:"EGK MingPan Pro AI",cat:"analytics",catLabel:"Analytics",icon:"https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/4b/74/50/4b7450a7-a25c-36d7-2830-47e33b4d9064/Placeholder.mill/400x400bb-75.webp",ios:"https://apps.apple.com/my/app/egk-mingpan-pro-ai/id6760460331",platform:"iOS",desc:"AI-powered strategic planning and business analytics — turn complex data into clear decisions with intelligent dashboards.",glow:"#FF8C00"},
+  {name:"EGK CrisisOracle AI",cat:"ai",catLabel:"AI",icon:"https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/13/2c/12/132c12ad-8985-0966-4018-5f3b9e9cb30d/Placeholder.mill/400x400bb-75.webp",ios:"https://apps.apple.com/my/app/egkcrisisoracleai/id6760585768",platform:"iOS",desc:"AI crisis prediction and business continuity intelligence — anticipate disruptions, model scenarios, and prepare strategic responses.",glow:"#7040FF"},
+  {name:"EGK ForexVision AI",cat:"analytics",catLabel:"Analytics",icon:"https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/ba/66/ca/ba66ca68-7525-94a6-f93d-863a71b408f0/Placeholder.mill/400x400bb-75.webp",ios:"https://apps.apple.com/my/app/egk-forexvision-ai/id6760966550",platform:"iOS",desc:"AI-driven forex intelligence — currency pair analysis, trend prediction, and trading signal insights for MYR and global pairs.",glow:"#FF8C00"},
+  {name:"EGK RetainAI",cat:"ai",catLabel:"AI",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4a/5f/83/4a5f8386-a8a8-a080-9d95-d5ba54ea2713/AppIcon-85-220-2-0-0-2x-0-0.png/400x400ib-75.webp",ios:"https://apps.apple.com/my/app/egk-retainai/id6745051325?mt=12",platform:"macOS",desc:"Customer retention AI — identify at-risk customers, model churn probability, and automate retention strategies.",glow:"#7040FF"},
+  {name:"EGK FlightLive Info",cat:"logistics",catLabel:"Logistics",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/00/b2/39/00b2391d-b1c5-56fe-bc98-472058805c4c/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egk-flightlive-info/id6749836223",platform:"iOS",desc:"Real-time flight status intelligence — track arrivals, departures, and delays for smarter business travel and logistics planning.",glow:"#00DD88"},
+  {name:"EGK Insight AI V2T",cat:"ai",catLabel:"AI",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f7/9e/ea/f79eead4-34c4-88b7-b25a-a6a77951cf8f/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egk-insight-ai-v2t/id6745312484",platform:"iOS",desc:"AI voice-to-text intelligence — convert meeting recordings, calls, and voice memos into structured insights and action items.",glow:"#7040FF"},
+  {name:"EGK Asset Tracker",cat:"ops",catLabel:"Operations",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/5f/fb/32/5ffb3275-67ca-cabb-2428-03924ae439e8/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egk-asset-tracker/id6744913491",platform:"iOS",desc:"Company asset lifecycle management — track, audit, depreciate, and report on all business assets from a single dashboard.",glow:"#00C8FF"},
+  {name:"EGK Project Management",cat:"ops",catLabel:"Operations",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/dc/bb/79/dcbb7925-b532-5b6f-8738-6280a499a71e/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egk-project-management/id6744937272",platform:"iOS",desc:"End-to-end project management — task allocation, milestone tracking, team collaboration, and deadline management on iOS.",glow:"#00C8FF"},
+  {name:"EGK Cost Control Center",cat:"finance",catLabel:"Finance",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6e/68/43/6e6843d5-390e-3ce4-eb56-cc081b722e96/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egk-cost-control-center/id6744937838",platform:"iOS",desc:"Real-time cost monitoring and budget control — track expenses by project, department, or cost center with variance alerts.",glow:"#FFB800"},
+  {name:"EGK Acc Dash",cat:"finance",catLabel:"Finance",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/63/f4/50/63f4501d-e3e2-690e-ebae-3458cf2fe36e/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egk-acc-dash/id6744953126",platform:"iOS",desc:"Accounting dashboard intelligence — P&L, balance sheet, cash flow, and financial KPIs in one beautiful live view.",glow:"#FFB800"},
+  {name:"EGK SRM Board",cat:"ops",catLabel:"Operations",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6a/bb/ca/6abbca26-6428-6e7b-c567-ed2feb0ccbe3/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egk-srm-board/id6744938173",platform:"iOS",desc:"Supplier relationship management — vendor scorecards, procurement tracking, contract management, and performance KPIs.",glow:"#00C8FF"},
+  {name:"EGK Shipment Status Dash",cat:"logistics",catLabel:"Logistics",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a6/4c/b9/a64cb9f4-6159-f44b-3d37-5a023ce799b0/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egk-shipment-status-dash/id6744884723",platform:"iOS",desc:"Multi-carrier shipment tracking dashboard — monitor all outbound and inbound shipments in real-time across carriers.",glow:"#00DD88"},
+  {name:"EGK ParcelMark",cat:"logistics",catLabel:"Logistics",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/18/d1/62/18d162ec-3f85-aaad-3f86-f4dcd2a91b26/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egk-parcelmark/id6745787658",platform:"iOS",desc:"Parcel management and marking system — barcode generation, parcel labeling, batch tracking, and delivery confirmation.",glow:"#00DD88"},
+  {name:"EGK SlideCraft",cat:"productivity",catLabel:"Productivity",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/fb/2a/b6/fb2ab6dd-47d7-4be4-f73c-1050736ec455/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egkslidecraft/id6746745622",platform:"iOS",desc:"Professional presentation creation on iOS — AI-assisted slide design, content structuring, and export-ready business decks.",glow:"#00E8B0"},
+  {name:"EGK POSMaster",cat:"productivity",catLabel:"Productivity",icon:"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b2/e6/6a/b2e66a3f-7c73-5c9b-5f60-60c2e6afd943/AppIcon-1x_U007epad-0-1-85-220-0.png/400x400ia-75.webp",ios:"https://apps.apple.com/my/app/egkposmaster/id6746720210",platform:"iOS",desc:"Full-featured iOS POS system — sales processing, inventory management, receipt generation, and daily sales reporting.",glow:"#00E8B0"},
+];
+
+const catClassMap={ai:'cat-ai',finance:'cat-finance',ops:'cat-ops',logistics:'cat-logistics',analytics:'cat-analytics',productivity:'cat-productivity'};
+
+function renderApps(filter){
+  const g=document.getElementById('appsGrid');
+  g.innerHTML='';
+  const list=filter==='all'?appsData:appsData.filter(a=>a.cat===filter);
+  list.forEach(a=>{
+    g.innerHTML+=`<div class="app-card reveal-card">
+      <div class="app-glow" style="background:${a.glow}"></div>
+      <div class="app-top">
+        <img class="app-icon" src="${a.icon}" alt="${a.name}" onerror="this.style.opacity='.3'">
+        <div>
+          <span class="app-cat ${catClassMap[a.cat]}">${a.catLabel}</span>
+          <div class="app-name">${a.name}</div>
+          <div class="app-platform">📱 ${a.platform}</div>
+        </div>
+      </div>
+      <div class="app-desc">${a.desc}</div>
+      <div class="app-dl">
+        <a href="${a.ios}" target="_blank">
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store">
+        </a>
+      </div>
+    </div>`;
+  });
+  // re-observe new cards
+  document.querySelectorAll('.reveal-card').forEach(el=>{
+    el.style.opacity='0';el.style.transform='translateY(20px)';
+    el.style.transition='all .5s ease';
+    setTimeout(()=>{el.style.opacity='1';el.style.transform='translateY(0)';},50);
+  });
+}
+renderApps('all');
+
+function filterApps(cat,el){
+  document.querySelectorAll('.cf').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderApps(cat);
 }
 
-// ── Generate speed lines ──
-const linesEl = document.getElementById('speedLines');
-for (let i = 0; i < 25; i++) {
-  const l = document.createElement('div');
-  l.className = 'speed-line';
-  const width = 80 + Math.random() * 200;
-  const top   = 15 + Math.random() * 65;
-  l.style.cssText = `
-    width:${width}px;
-    top:${top}%;
-    right:${Math.random()*30}%;
-    animation-delay:${Math.random()*0.6}s;
-    animation-duration:${0.4 + Math.random()*0.4}s;
-    opacity:${0.3 + Math.random()*0.5};
-  `;
-  linesEl.appendChild(l);
-}
+// ══ BUSINESS CANVAS ANIMATION ══
+(function(){
+  const canvas=document.getElementById('biz-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H;
+  function resize(){ W=canvas.width=canvas.offsetWidth; H=canvas.height=canvas.offsetHeight; }
+  resize(); window.addEventListener('resize',resize);
 
-// ── Wheel spin: individual origins ──
-document.querySelectorAll('.wheel-spin').forEach(el => {
-  const cx = el.getAttribute('cx');
-  const cy = el.getAttribute('cy');
-  const x1 = el.getAttribute('x1');
-  const y1 = el.getAttribute('y1');
-  if (cx && cy) {
-    el.style.transformOrigin = `${cx}px ${cy}px`;
-    el.style.animation = `spin ${0.2 + Math.random()*0.15}s linear infinite`;
+  let t=0;
+
+  // Floating business icons (text)
+  const bizIcons=['💼','📊','🤖','💹','📈','🚢','💰','📱','⚙️','🔗','📋','✅','💡','🌐','📦','🔐'];
+  const floaters=bizIcons.map((ico,i)=>({
+    ico,
+    x:Math.random(),y:Math.random(),
+    vx:(Math.random()-.5)*.0003,vy:(Math.random()-.5)*.0003,
+    scale:.8+Math.random()*.6,
+    phase:Math.random()*Math.PI*2,
+    speed:.3+Math.random()*.5
+  }));
+
+  // Connection nodes (hexagonal business network)
+  const nodes=Array.from({length:20},()=>({
+    x:Math.random(),y:Math.random(),
+    r:2+Math.random()*3,
+    color:`hsl(${200+Math.random()*60},80%,${50+Math.random()*30}%)`,
+    phase:Math.random()*Math.PI*2,
+    speed:.005+Math.random()*.008
+  }));
+
+  // Data streams (vertical lines scrolling upward)
+  const dataStreams=Array.from({length:15},()=>({
+    x:Math.random(),
+    y:Math.random(),
+    chars:'0123456789ABCDEF$%+',
+    segments:Array.from({length:8},()=>({c:Math.floor(Math.random()*19),a:Math.random()})),
+    speed:.001+Math.random()*.002
+  }));
+
+  // Candlestick chart (bottom right area)
+  const candles=Array.from({length:20},()=>({
+    open:.4+Math.random()*.2,close:.4+Math.random()*.2,
+    high:0,low:1,
+    x:Math.random()
+  }));
+  candles.forEach(c=>{c.high=Math.max(c.open,c.close)+Math.random()*.05;c.low=Math.min(c.open,c.close)-Math.random()*.05;});
+
+  // Orbit rings
+  const rings=[
+    {r:.12,speed:.008,phase:0,color:'rgba(0,200,255,0.15)'},
+    {r:.18,speed:.005,phase:1,color:'rgba(112,64,255,0.1)'},
+    {r:.25,speed:.003,phase:2,color:'rgba(0,232,176,0.08)'},
+  ];
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    t+=.01;
+
+    // Dark gradient bg
+    const bg=ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,'rgba(2,9,20,0)'); bg.addColorStop(1,'rgba(4,14,32,0)');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+    // ── ORBIT RINGS (center) ──
+    const cx=W*.55, cy=H*.45;
+    rings.forEach(rg=>{
+      ctx.beginPath();
+      ctx.ellipse(cx,cy,rg.r*W,rg.r*W*.35,0,0,Math.PI*2);
+      ctx.strokeStyle=rg.color; ctx.lineWidth=1; ctx.setLineDash([4,8]);
+      ctx.stroke(); ctx.setLineDash([]);
+      // dot on ring
+      const da=t*rg.speed*100+rg.phase;
+      const dx=cx+Math.cos(da)*rg.r*W;
+      const dy=cy+Math.sin(da)*rg.r*W*.35;
+      ctx.beginPath(); ctx.arc(dx,dy,3,0,Math.PI*2);
+      ctx.fillStyle=rg.color.replace('0.','0.8'); ctx.fill();
+    });
+
+    // ── CONNECTION LINES between nodes ──
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const ni=nodes[i],nj=nodes[j];
+        const dx=(ni.x-nj.x)*W, dy=(ni.y-nj.y)*H;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<W*.18){
+          const a=0.15*(1-dist/(W*.18));
+          ctx.strokeStyle=`rgba(0,200,255,${a})`;
+          ctx.lineWidth=.7;
+          ctx.beginPath();
+          ctx.moveTo(ni.x*W,ni.y*H); ctx.lineTo(nj.x*W,nj.y*H);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // ── NODES ──
+    nodes.forEach(n=>{
+      n.x+=n.speed*.01*(Math.sin(t*n.phase*.3)-.5);
+      n.y+=n.speed*.006*(Math.cos(t*n.phase*.2)-.5);
+      if(n.x<0)n.x=1; if(n.x>1)n.x=0;
+      if(n.y<0)n.y=1; if(n.y>1)n.y=0;
+      const pulse=0.5+0.5*Math.sin(t*2+n.phase);
+      ctx.save();
+      ctx.shadowBlur=10+pulse*10; ctx.shadowColor=n.color;
+      ctx.fillStyle=n.color;
+      ctx.beginPath(); ctx.arc(n.x*W,n.y*H,n.r*(0.8+0.4*pulse),0,Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    // ── DATA STREAMS ──
+    dataStreams.forEach(ds=>{
+      ds.y-=ds.speed;
+      if(ds.y<-0.3)ds.y=1.1;
+      const chars='0123456789ABCDEF$%+×÷';
+      ctx.font='700 10px monospace';
+      ds.segments.forEach((seg,j)=>{
+        const yy=(ds.y+j*.04)*H;
+        if(yy<0||yy>H)return;
+        const a=.06+.1*Math.abs(Math.sin(t+j));
+        ctx.fillStyle=`rgba(0,200,255,${a})`;
+        ctx.fillText(chars[Math.floor(t*20+seg.a*50)%chars.length],ds.x*W,yy);
+      });
+    });
+
+    // ── BUSINESS CHART BARS (bottom) ──
+    const barW=W*.03, barSpacing=W*.04;
+    const barBaseY=H*.95;
+    for(let b=0;b<14;b++){
+      const bx=b*barSpacing+W*.06;
+      const bh=(0.1+0.5*Math.abs(Math.sin(t*.3+b*.8)))*H*.18;
+      const alpha=0.15+0.15*Math.abs(Math.sin(t*.5+b*.4));
+      const up=Math.sin(t*.3+b*.8)>0;
+      ctx.fillStyle=up?`rgba(0,220,140,${alpha})`:`rgba(255,80,80,${alpha})`;
+      ctx.beginPath();
+      ctx.roundRect(bx,barBaseY-bh,barW,bh,3);
+      ctx.fill();
+    }
+
+    // ── FLOATING EMOJI ICONS ──
+    floaters.forEach(fl=>{
+      fl.x+=fl.vx; fl.y+=fl.vy;
+      if(fl.x<-.05)fl.x=1.05; if(fl.x>1.05)fl.x=-.05;
+      if(fl.y<-.05)fl.y=1.05; if(fl.y>1.05)fl.y=-.05;
+      const a=0.06+0.06*Math.sin(t*fl.speed+fl.phase);
+      ctx.save();
+      ctx.globalAlpha=a;
+      ctx.font=`${Math.floor(18*fl.scale)}px serif`;
+      ctx.fillText(fl.ico,fl.x*W,fl.y*H);
+      ctx.restore();
+    });
+
+    // ── GRID LINES ──
+    ctx.strokeStyle='rgba(0,200,255,0.04)'; ctx.lineWidth=.8;
+    for(let gx=0;gx<=W;gx+=60){
+      ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke();
+    }
+    for(let gy=0;gy<=H;gy+=60){
+      ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke();
+    }
+
+    // ── VIGNETTE ──
+    const vign=ctx.createRadialGradient(W*.5,H*.5,H*.15,W*.5,H*.5,H*.85);
+    vign.addColorStop(0,'rgba(2,9,20,0)');
+    vign.addColorStop(1,'rgba(2,9,20,0.7)');
+    ctx.fillStyle=vign; ctx.fillRect(0,0,W,H);
+
+    requestAnimationFrame(draw);
   }
-});
+  draw();
+})();
 
-// ── Animated speed/power HUD ──
-let baseSpeed = 320;
-let speedDir  = 1;
-setInterval(() => {
-  baseSpeed += speedDir * (Math.random() * 2);
-  if (baseSpeed > 325) speedDir = -1;
-  if (baseSpeed < 315) speedDir =  1;
-  document.getElementById('speedVal').textContent = Math.round(baseSpeed);
-  document.getElementById('powerVal').textContent = (11.8 + Math.random()*0.8).toFixed(1);
-}, 300);
+// ── SCROLL REVEAL ──
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
-
 </body>
 </html>
